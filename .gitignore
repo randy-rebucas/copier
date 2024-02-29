@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+node_modules
+
+.env
+
+/scratch/*
+scratch/*
+scratch/infusionsoft
+
+/files/*
+files/*
