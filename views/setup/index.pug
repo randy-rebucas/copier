@@ -1,0 +1,45 @@
+extends ../layout/guest
+
+block content
+  div.w-100.m-auto.p-5(style="max-width: 600px")
+    h1.h3.mb-3.fw-normal.text-uppercase= title
+    p.text-center= subtitle
+    form(action='/setup' method='POST')#infusionsoft-form
+      .row.mb-3
+        label.col-sm-4.col-form-label App Id: 
+        .col-sm-8
+          input(type='text' name='appId' id="appId" value= infusionsoft.app_id class="bg-dark-subtle form-control" required readonly)
+      .row.mb-3
+        label.col-sm-4.col-form-label Client Id: 
+        .col-sm-8
+          input(type='text' name='clientId' value= infusionsoft.client_id class="bg-dark-subtle form-control" required readonly)
+      .row.mb-3
+        label.col-sm-4.col-form-label Client Secret: 
+        .col-sm-8
+          input(type='text' name='clientSecret' value= infusionsoft.client_secret class="bg-dark-subtle form-control" required readonly)
+      .row.mb-3
+        label.col-sm-4.col-form-label Redirect URL: 
+        .col-sm-8
+          input(type='text' name='redirectUrl' value= infusionsoft.redirect_url class="form-control" required)
+      .row.mb-3
+        label.col-sm-4.col-form-label OAuth Token: 
+        .col-sm-8
+          input(type='text' name='oAuthToken' value= infusionsoft.oauth_token class="bg-dark-subtle form-control" required readonly)
+      .row.mb-3
+        label.col-sm-4.col-form-label Database: 
+        .col-sm-8
+          select#database.form-select(name='database' required)
+            option(value=0) -- Select --
+            option(value=1 selected=(infusionsoft.database === '1')) RHI
+            option(value=2 selected=(infusionsoft.database === '2')) Soalbeat
+
+      button(type='submit' value='Submit' class="btn btn-primary") Submit
+      a(class='btn btn-link' href='/') Cancel
+block js 
+  script(src='/javascripts/setup.js')
+  script(type="text/javascript").
+    $(document).ready(setup.init({
+      soulbeatAppId: '#{soulbeatAppId}',
+      rhiAppId: '#{rhiAppId}',
+      baseDatabase: '#{oldDatabase}'
+    }))

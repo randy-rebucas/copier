@@ -1,0 +1,19 @@
+extends ../layout/main
+
+block content
+  div.container.py-5.h-100
+    div.row.d-flex.justify-content-center.align-items-center.h-100
+      div.col.col-md-9.col-lg-7.col-xl-5
+        div.card(style="border-radius: 15px")
+          div.card-body.p-4
+            div.d-flex.text-black
+              div.align-items-center.d-flex.flex-shrink-0
+                img.img-fluid(src= user.logo_url
+                  alt= user.name
+                  style="width: 180px; border-radius: 10px;")
+
+              div.flex-grow-1.ms-3
+                h5.mb-1= user.name
+                p.mb-2.pb-1(style="color: #2b2a2a;")= user.email
+                p.mb-2.pb-1(style="color: #2b2a2a;")= user.phone
+                p.mb-2.pb-1(style="color: #2b2a2a;")= user.address.line1 + ' ' + user.address.locality + ' ' + user.address.region + ' ' + user.address.postal_code

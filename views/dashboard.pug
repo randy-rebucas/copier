@@ -1,0 +1,38 @@
+extends layout/main
+
+block content
+  div.row
+    div.col-sm-9
+      table#contacts.table.table-striped
+        thead 
+          tr
+            th Id
+            th Full Name 
+            th Company
+            th Created
+            th Emails 
+            th Phone Numbers 
+            th Actions
+    div.col-sm-3
+      div.card
+        div.card-body
+          h5.card-title Contacts
+          h6.card-subtitle.mb-2.text-body-secondary Total contact scrapped
+          h2.h2= total.TotalContacts
+          p
+        //- div.card(style="border-radius: 15px")
+        //-   div.card-body.p-4
+        //-     div.d-flex.text-black
+        //-       div.align-items-center.d-flex.flex-shrink-0
+        //-         img.img-fluid(src= user.logo_url
+        //-           alt= user.name
+        //-           style="width: 180px; border-radius: 10px;")
+
+        //-       div.flex-grow-1.ms-3
+        //-         h5.mb-1= user.name
+        //-         p.mb-2.pb-1(style="color: #2b2a2a;")= user.email
+        //-         p.mb-2.pb-1(style="color: #2b2a2a;")= user.phone
+        //-         p.mb-2.pb-1(style="color: #2b2a2a;")= user.address.line1 + ' ' + user.address.locality + ' ' + user.address.region + ' ' + user.address.postal_code
+
+block js 
+  script(src='/javascripts/dashboard.js')
