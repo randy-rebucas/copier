@@ -4,9 +4,8 @@ node_modules
 
 .env
 
-/scratch/*
-scratch/*
-scratch/infusionsoft
+/scratch
+scratch
 
-/files/*
-files/*
+/files
+files

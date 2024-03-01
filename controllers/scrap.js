@@ -63,7 +63,7 @@ exports.index = async (req, res, next) => {
      * 2000 / 1000 = 2
      */
     let page = lastLog.length === 0 ? currentPage : (Object.values(lastLog)[0].offset * limit) / limit;
-    
+
     // Load the items.
     loadItems(page, module);
 
@@ -731,7 +731,7 @@ const createLog = (page, lastId, module) => {
  * @returns 
  */
 const hasMoreItems = (page, total) => {
-    const startIndex = (page - 1) * limit + 1;
+    const startIndex = ((page / limit) - 1) * limit + 1;
     return total === 0 || startIndex < total;
 };
 

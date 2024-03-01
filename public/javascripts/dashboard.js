@@ -3,7 +3,7 @@ var myFeature = {
   init: function (settings) {
     myFeature.config = {
       table: $("#contacts"),
-      btnPreview: $(".preview"),
+      btnPreview: $(".preview")
     };
 
     // Allow overriding the default config
@@ -25,6 +25,26 @@ var myFeature = {
     myFeature.setup();
 
     setInterval(myFeature.getContactCounts, 60 * 1000);
+
+
+    $(document).on('click', '.btn-scrap', function () {
+      var _self = $(this);
+      $.ajax({
+        type: "GET",
+        url: `/scrap?module=contacts`,
+        beforeSend: function () {
+          _self.text('Scrapping progress...');
+          _self.attr('aria-disabled', true);
+          _self.addClass('disabled');
+        },
+        success: function () {
+          _self.text('Done scrapping.');
+          _self.attr('aria-disabled', false);
+          _self.removeClass('disabled');
+          console.log('completes');
+        },
+      });
+    });
   },
 
   scrap: function (data, dt) {
@@ -87,7 +107,7 @@ var myFeature = {
         temp += '<h5 class="card-title">Contacts</h5>';
         temp += '<h6 class="card-subtitle">Total Contact to Scrap</h6>';
         temp += '<h2 class="h2">0</h2>';
-        temp += '<a href="/scrap?module=contacts" class="btn btn-primary">Start Scrapping</a>';
+        temp += '<a href="javascript:;" class="btn btn-primary btn-scrap">Start Scrapping</a>';
         temp += '</div>';
         temp += '</div>';
         $(temp).appendTo($(".widgets"));
