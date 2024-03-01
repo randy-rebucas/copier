@@ -69,8 +69,17 @@ exports.index = async (req, res, next) => {
       res.status(500).send('Something error upon creating opportunity table!')
     }
 
-    // let test = await runTest();
-    // res.json(test);
+    // let contactResponse = await getContacts();
+    // let countResponse = await getContactsCount();
+
+    // const object = {
+    //   draw: req.query.draw,
+    //   recordsTotal: Object.values(countResponse)[0].count,
+    //   recordsFiltered: Object.values(countResponse)[0].count,
+    //   contacts: contactResponse,
+    // };
+    // res.json(object);
+
     res.render("index", {
       title: "Infusionsoft Exporter",
       infusionsoft: req.infusionsoft,
@@ -81,7 +90,7 @@ exports.index = async (req, res, next) => {
   }
 };
 
-const runTest = () => {
+const getContacts = () => {
   return new Promise((resolve, reject) => {
     let query = `SELECT 
     contact_id as id,
@@ -100,7 +109,18 @@ const runTest = () => {
     addresses,
     phone_numbers
     FROM contacts ORDER BY contact_id ASC LIMIT 10 OFFSET 10`;
+    return connection.query(query, (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results)
+    });
+  })
+}
 
+const getContactsCount = () => {
+  return new Promise((resolve, reject) => {
+    let query = `SELECT (SELECT FORMAT(COUNT(DISTINCT contact_id), 2) FROM contacts) as count`;
     return connection.query(query, (error, results) => {
       if (error) {
         reject(error);

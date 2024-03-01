@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const controller = require('../controllers/contacts');
+const controller = require('../controllers//contacts');
 
 /**
  * loads middlewares
@@ -13,8 +13,6 @@ const guard = require("../middlewares/routeGuard");
 router.get('/', guard, infusionsoft, controller.index);
 
 router.get('/all', guard, infusionsoft, controller.getAll);
-
-router.get('/count', guard, infusionsoft, controller.getCount);
 
 router.get('/:id', guard, controller.getOne);
 
