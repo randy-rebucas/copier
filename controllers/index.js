@@ -79,7 +79,7 @@ exports.index = async (req, res, next) => {
     //   contacts: contactResponse,
     // };
     // res.json(object);
-
+    
     res.render("index", {
       title: "Infusionsoft Exporter",
       infusionsoft: req.infusionsoft,

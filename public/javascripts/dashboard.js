@@ -25,26 +25,6 @@ var myFeature = {
     myFeature.setup();
 
     setInterval(myFeature.getContactCounts, 60 * 1000);
-
-
-    $(document).on('click', '.btn-scrap', function () {
-      var _self = $(this);
-      $.ajax({
-        type: "GET",
-        url: `/scrap?module=contacts`,
-        beforeSend: function () {
-          _self.text('Scrapping progress...');
-          _self.attr('aria-disabled', true);
-          _self.addClass('disabled');
-        },
-        success: function () {
-          _self.text('Done scrapping.');
-          _self.attr('aria-disabled', false);
-          _self.removeClass('disabled');
-          console.log('completes');
-        },
-      });
-    });
   },
 
   scrap: function (data, dt) {
@@ -228,7 +208,29 @@ var myFeature = {
         },
       ],
     };
-    myFeature.config.table.DataTable(option);
+    let dtHandler = myFeature.config.table.DataTable(option);
+
+    $(document).on('click', '.btn-scrap', function () {
+      var _self = $(this);
+      $.ajax({
+        type: "GET",
+        url: `/scrap?module=contacts`,
+        beforeSend: function () {
+          _self.text('Scrapping progress...');
+          _self.attr('aria-disabled', true);
+          _self.addClass('disabled');
+          dtHandler.processing(true);
+          dtHandler.clear().draw();
+        },
+        success: function () {
+          _self.text('Done scrapping.');
+          _self.attr('aria-disabled', false);
+          _self.removeClass('disabled');
+          dtHandler.processing(false);
+          dtHandler.columns.adjust().draw();
+        },
+      });
+    });
 
     myFeature.config.table.on("click", "tbody tr td.preview", function () {
       let id = $(this).find("a").attr("data-id");
