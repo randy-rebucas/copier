@@ -64,7 +64,6 @@ var myFeature = {
       url: '/rest/user/profile',
       async: true,
       success: (response) => {
-        console.log(response);
         let temp = '';
         temp += '<div class="card">';
         temp += '<div class="card-body p-4">';
@@ -246,7 +245,7 @@ var myFeature = {
           let modalTemplate = `<p>created: ${response.date_created}</p>`;
           modalTemplate += `<h5>Addresses</h5>`;
           let addresses = response.addresses;
-          console.log(addresses);
+
           if (addresses.length) {
             addresses.forEach((address) => {
               modalTemplate += `<address>${address.line1} ${address.locality} ${address.region}</address>`;
