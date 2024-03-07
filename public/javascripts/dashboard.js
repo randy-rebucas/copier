@@ -31,7 +31,7 @@ var myFeature = {
     // this is already been removed
     $.ajax({
       type: "POST",
-      url: `${window.location.origin}/export/transaction`,
+      url: `${window.location.origin}/scrap`,
       data: {
         module: "contacts",
         data: data,

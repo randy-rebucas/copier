@@ -32,9 +32,12 @@ block content
             option(value=0) -- Select --
             option(value=1 selected=(infusionsoft.database === '1')) RHI
             option(value=2 selected=(infusionsoft.database === '2')) Soalbeat
-
-      button(type='submit' value='Submit' class="btn btn-primary") Submit
-      a(class='btn btn-link' href='/') Cancel
+      .row 
+        .col-sm-8
+          button(type='submit' value='Submit' class="btn btn-primary") Submit
+          a(class='btn btn-link' href='/') Cancel
+        .col-sm-4
+          a(class='btn btn-secondary w-100' href='/setup/install') Install Database
 block js 
   script(src='/javascripts/setup.js')
   script(type="text/javascript").
