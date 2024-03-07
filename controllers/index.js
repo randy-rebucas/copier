@@ -79,7 +79,7 @@ exports.index = async (req, res, next) => {
     //   contacts: contactResponse,
     // };
     // res.json(object);
-    
+
     res.render("index", {
       title: "Infusionsoft Exporter",
       infusionsoft: req.infusionsoft,
@@ -132,15 +132,7 @@ const getContactsCount = () => {
 
 const createLogTable = async () => {
   return new Promise((resolve, reject) => {
-    let query = `CREATE TABLE IF NOT EXISTS logs (
-      id int(11) NOT NULL auto_increment,   
-      offset int(11) NOT NULL default '0',       
-      last_id int(250)  NOT NULL default '0',     
-      type  varchar(100) NOT NULL default '',
-      created_at timestamp NULL default CURRENT_TIMESTAMP,
-      PRIMARY KEY  (id)
-    )`;
-
+    let query = "CREATE TABLE IF NOT EXISTS `logs` ( `id` int(11) NOT NULL auto_increment,`offset` int(11) NOT NULL,`last_id` int(11) NOT NULL,`type`  VARCHAR(100) NOT NULL default '',`created_at` TIMESTAMP NULL default CURRENT_TIMESTAMP, PRIMARY KEY (`id`))";
     return connection.query(query, (error, results) => {
       if (error) {
         reject(error);
