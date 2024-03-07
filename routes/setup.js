@@ -13,4 +13,6 @@ router.get('/', infusionsoft, controller.index);
 
 router.post('/', controller.set);
 
+router.get('/install', infusionsoft, controller.install);
+
 module.exports = router;
