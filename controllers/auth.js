@@ -32,13 +32,13 @@ exports.requestAccessToken = async (req, res, next) => {
     req.session.refreshToken = response.refresh_token;
     req.session.save();
 
-    localStorage.setItem(
-      "tokens",
-      JSON.stringify({
-        ACCESS_TOKEN: response.access_token,
-        REFRESH_TOKEN: response.refresh_token
-      })
-    );
+    // localStorage.setItem(
+    //   "tokens",
+    //   JSON.stringify({
+    //     ACCESS_TOKEN: response.access_token,
+    //     REFRESH_TOKEN: response.refresh_token
+    //   })
+    // );
 
     res.redirect("/dashboard");
   } catch (err) {

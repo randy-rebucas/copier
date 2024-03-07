@@ -8,26 +8,22 @@ exports.index = async (req, res, next) => {
   res.render("setup/index", {
     title: "infusionsoft setup",
     subTitle: "Please enter infusionsoft developer account.",
-    infusionsoft: req.infusionsoft ?? {},
+    infusionsoft: req.infusionsoft,
     soulbeatAppId: process.env.SOULBEAT_APP_ID,
-    rhiAppId: process.env.RHI_APP_ID,
-    oldDatabase: req.infusionsoft.database
+    rhiAppId: process.env.RHI_APP_ID
   });
 };
 
 exports.set = async (req, res, next) => {
   const { appId, clientId, clientSecret, redirectUrl, oAuthToken, database } = req.body;
-  localStorage.setItem(
-    "infusionsoft",
-    JSON.stringify({
-      INFUSIONSOFT_APP_ID: appId,
-      INFUSIONSOFT_CLIENT_ID: clientId,
-      INFUSIONSOFT_CLIENT_SECRET: clientSecret,
-      INFUSIONSOFT_REDIRECT_URL: redirectUrl,
-      INFUSIONSOFT_OAUTH_TOKEN: oAuthToken,
-      INFUSIONSOFT_DATABASE: database,
-    })
-  );
+
+  req.session.appId = appId;
+  req.session.clientId = clientId;
+  req.session.clientSecret = clientSecret;
+  req.session.redirectUrl = redirectUrl;
+  req.session.oAuthToken = oAuthToken;
+  req.session.database = database;
+  req.session.save();
 
   res.redirect("/");
 };

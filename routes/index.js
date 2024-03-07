@@ -4,7 +4,7 @@ var router = express.Router();
 /**
  * loads middlewares
  */
-const infusionsoft = require("../middlewares/localStorage");
+const infusionsoft = require("../middlewares/sessionStorage");
 const authorizationUrl = require("../middlewares/authorizationUrl");
 
 const controller = require('../controllers/index');

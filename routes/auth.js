@@ -6,7 +6,7 @@ const controller = require("../controllers/auth");
 /**
  * loads middlewares
  */
-const infusionsoft = require("../middlewares/localStorage");
+const infusionsoft = require("../middlewares/sessionStorage");
 
 /* GET home page. */
 router.get("/refreshAccessToken", infusionsoft, controller.refreshAccessToken);

@@ -6,7 +6,7 @@ const controller = require('../controllers/rest');
 /**
  * loads middlewares
  */
-const infusionsoft = require("../middlewares/localStorage");
+const infusionsoft = require("../middlewares/sessionStorage");
 
 const guard = require("../middlewares/routeGuard");
 /* GET home page. */

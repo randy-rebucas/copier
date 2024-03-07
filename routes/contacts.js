@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-const controller = require('../controllers//contacts');
+const controller = require('../controllers/contacts');
 
 /**
  * loads middlewares
  */
-const infusionsoft = require("../middlewares/localStorage");
+const infusionsoft = require("../middlewares/sessionStorage");
 
 const guard = require("../middlewares/routeGuard");
 /* GET home page. */
