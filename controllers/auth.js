@@ -10,13 +10,9 @@ exports.requestAccessToken = async (req, res, next) => {
     const requestBody = {
       grant_type: "authorization_code",
       code: req.params.code,
-      client_id:
-        req.session.client_id ?? process.env.INFUSIONSOFT_CLIENT_ID,
-      client_secret:
-        req.session.client_secret ??
-        process.env.INFUSIONSOFT_CLIENT_SECRET,
-      redirect_uri:
-        req.session.redirect_url ?? process.env.INFUSIONSOFT_REDIRECT_URL,
+      client_id: process.env.INFUSIONSOFT_CLIENT_ID,
+      client_secret: process.env.INFUSIONSOFT_CLIENT_SECRET,
+      redirect_uri: process.env.INFUSIONSOFT_REDIRECT_URL,
     };
 
     const options = {
@@ -79,7 +75,7 @@ exports.refreshAccessToken = async (req, res, next) => {
       "tokens",
       JSON.stringify({
         ACCESS_TOKEN: response.access_token,
-        REFRESH_TOKEN: response.refresh_token
+        REFRESH_TOKEN: response.refresh_token,
       })
     );
 
