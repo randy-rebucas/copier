@@ -1,0 +1,55 @@
+zip scapper.zip -r ./
+
+appointment.add
+appointment.delete
+appointment.edit
+company.add
+company.delete
+company.edit
+contact.add
+contact.delete
+contact.edit
+contact.redact
+contactGroup.add
+contactGroup.applied
+contactGroup.delete
+contactGroup.edit
+contactGroup.removed
+invoice.add
+invoice.delete
+invoice.edit
+invoice.payment.add
+invoice.payment.delete
+invoice.payment.edit
+leadsource.add
+leadsource.delete
+leadsource.edit
+note.add
+note.delete
+note.edit
+opportunity.add
+opportunity.delete
+opportunity.edit
+opportunity.stage_move
+order.add
+order.delete
+order.edit
+product.add
+product.delete
+product.edit
+subscription.add
+subscription.delete
+subscription.edit
+task.add
+task.delete
+task.edit
+user.activate
+user.add
+user.edit
+
+{
+  key: '83',
+  eventKey: 'contact.add',
+  hookUrl: 'https://9982-49-147-104-165.ngrok-free.app/contacts/create',
+  status: 'Unverified'
+}

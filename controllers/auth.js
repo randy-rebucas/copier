@@ -10,18 +10,14 @@ exports.requestAccessToken = async (req, res, next) => {
     const requestBody = {
       grant_type: "authorization_code",
       code: req.params.code,
-      client_id:
-        req.infusionsoft.client_id ?? process.env.INFUSIONSOFT_CLIENT_ID,
-      client_secret:
-        req.infusionsoft.client_secret ??
-        process.env.INFUSIONSOFT_CLIENT_SECRET,
-      redirect_uri:
-        req.infusionsoft.redirect_url ?? process.env.INFUSIONSOFT_REDIRECT_URL,
+      client_id: req.session.client_id,
+      client_secret: req.session.client_secret,
+      redirect_uri: req.session.redirect_url,
     };
 
     const options = {
       method: "POST",
-      uri: process.env.OAUTH2_TOKEN_URL,
+      uri: eq.session.oAuthToken,
       form: requestBody,
       json: true,
     };
@@ -31,14 +27,6 @@ exports.requestAccessToken = async (req, res, next) => {
     req.session.accessToken = response.access_token;
     req.session.refreshToken = response.refresh_token;
     req.session.save();
-
-    // localStorage.setItem(
-    //   "tokens",
-    //   JSON.stringify({
-    //     ACCESS_TOKEN: response.access_token,
-    //     REFRESH_TOKEN: response.refresh_token
-    //   })
-    // );
 
     res.redirect("/dashboard");
   } catch (err) {
@@ -79,7 +67,7 @@ exports.refreshAccessToken = async (req, res, next) => {
       "tokens",
       JSON.stringify({
         ACCESS_TOKEN: response.access_token,
-        REFRESH_TOKEN: response.refresh_token
+        REFRESH_TOKEN: response.refresh_token,
       })
     );
 

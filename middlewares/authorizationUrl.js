@@ -1,12 +1,12 @@
 module.exports = (req, res, next) => {
-    const queryParams = new URLSearchParams({
-        response_type: "code",
-        scope: "full",
-        client_id: req.session.client_id ?? process.env.INFUSIONSOFT_CLIENT_ID,
-        redirect_uri: req.session.redirect_url ?? process.env.INFUSIONSOFT_REDIRECT_URL,
-    });
+  const queryParams = new URLSearchParams({
+    response_type: "code",
+    scope: "full",
+    client_id: req.session.client_id,
+    redirect_uri: req.session.redirect_url,
+  });
 
-    req.getAuthorizationUrl = `${process.env.OAUTH2_AUTHORIZATION_URL}?${queryParams}`;
+  req.getAuthorizationUrl = `${process.env.OAUTH2_AUTHORIZATION_URL}?${queryParams}`;
 
-    next();
+  next();
 };
