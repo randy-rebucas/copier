@@ -28,14 +28,6 @@ exports.requestAccessToken = async (req, res, next) => {
     req.session.refreshToken = response.refresh_token;
     req.session.save();
 
-    // localStorage.setItem(
-    //   "tokens",
-    //   JSON.stringify({
-    //     ACCESS_TOKEN: response.access_token,
-    //     REFRESH_TOKEN: response.refresh_token
-    //   })
-    // );
-
     res.redirect("/dashboard");
   } catch (err) {
     res.send("Error requesting access token");
@@ -70,14 +62,6 @@ exports.refreshAccessToken = async (req, res, next) => {
     req.session.accessToken = response.access_token;
     req.session.refreshToken = response.refresh_token;
     req.session.save();
-
-    localStorage.setItem(
-      "tokens",
-      JSON.stringify({
-        ACCESS_TOKEN: response.access_token,
-        REFRESH_TOKEN: response.refresh_token,
-      })
-    );
 
     res.redirect("/users");
   } catch (err) {

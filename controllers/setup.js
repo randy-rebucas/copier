@@ -3,27 +3,26 @@
  * @version 0.0.1
  * ...
  */
+const store = require("store2");
 
 exports.index = async (req, res, next) => {
   res.render("setup/index", {
     title: "infusionsoft setup",
     subTitle: "Please enter infusionsoft developer account.",
     infusionsoft: req.infusionsoft,
-    soulbeatAppId: process.env.SOULBEAT_APP_ID,
-    rhiAppId: process.env.RHI_APP_ID
+    soulbeatAppId: process.env.INFUSIONSOFT_SOULBEAT_APP_ID,
+    rhiAppId: process.env.INFUSIONSOFT_APP_ID
   });
 };
 
 exports.set = async (req, res, next) => {
-  const { appId, clientId, clientSecret, redirectUrl, oAuthToken, database } = req.body;
+  const { appId, database } = req.body;
 
-  req.session.appId = appId;
-  req.session.clientId = clientId;
-  req.session.clientSecret = clientSecret;
-  req.session.redirectUrl = redirectUrl;
-  req.session.oAuthToken = oAuthToken;
-  req.session.database = database;
-  req.session.save();
+  store({appId: appId, database: database});
+  
+  // req.session.appId = appId;
+  // req.session.database = database;
+  // req.session.save();
 
   res.redirect("/");
 };

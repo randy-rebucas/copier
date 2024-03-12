@@ -37,6 +37,7 @@ exports.index = async (req, res, next) => {
 };
 
 const getContacts = (limit, offset, search, column, direction) => {
+
   return new Promise((resolve, reject) => {
     let query = `SELECT 
     contact_id as id,
@@ -59,7 +60,7 @@ const getContacts = (limit, offset, search, column, direction) => {
       query += ` WHERE given_name LIKE '%${search.value}%'`;
     }
     if (column) {
-      query += ` ORDER BY ${column} ${direction === "asc" ? "DESC" : "ASC"}`;
+      query += ` ORDER BY ${column} ${direction === "asc" ? "ASC" : "DESC"}`;
     }
     query += ` LIMIT ${limit} OFFSET ${offset}`;
     console.log(query);

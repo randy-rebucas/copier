@@ -1,5 +1,5 @@
 require("dotenv").config();
-const session = require("express-session");
+const store = require("store2");
 var mysql = require("mysql");
 
 let dbMap = {
@@ -28,15 +28,15 @@ const rhiDb = {
   connectTimeout: 60000,
 }
 
-var connection = mysql.createConnection(session.database == 1 ? rhiDb : soulbeatDb);
+var connection = mysql.createConnection(store('database') == 1 ? rhiDb : soulbeatDb);
 // scrapper
 connection.connect(function (err) {
   if (err) {
-    console.error(`${dbMap[session.database]} database connection failed: ${err.stack}`);
+    console.error(`${dbMap[store('database')]} database connection failed: ${err.stack}`);
     return;
   }
 
-  console.log(`Connected to ${dbMap[session.database]} databases.`);
+  console.log(`Connected to ${dbMap[store('database')]} databases.`);
 });
 module.exports = connection;
 

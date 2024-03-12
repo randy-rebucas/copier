@@ -3,7 +3,7 @@
  * @version 0.0.5
  * ...
  */
-
+const store = require("store2");
 const connection = require("../db");
 
 exports.index = async (req, res, next) => {
@@ -18,7 +18,7 @@ exports.index = async (req, res, next) => {
   // check of there is a code query
   if (code) {
     res.redirect(`auth/requestAccessToken/${code}`);
-  } else if (!req.session.appId) {
+  } else if (!store('appId')) {
     res.redirect("/setup");
   } else if (req.session.accessToken) {
     res.redirect("/dashboard");

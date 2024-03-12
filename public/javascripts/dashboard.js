@@ -138,8 +138,8 @@ var myFeature = {
         { mData: "action" },
       ],
       aoColumnDefs: [
-        { bSortable: true, aTargets: [1] },
-        { bSortable: false, aTargets: [0, 2, 3, 4, 5] },
+        { bSortable: true, aTargets: [0] },
+        { bSortable: false, aTargets: [1, 2, 3, 4, 5] },
         { bSearchable: true, aTargets: [1] },
         { bSearchable: false, aTargets: [0, 2, 3, 4, 5] },
         {
@@ -210,25 +210,31 @@ var myFeature = {
     let dtHandler = myFeature.config.table.DataTable(option);
 
     $(document).on('click', '.btn-scrap', function () {
-      var _self = $(this);
-      $.ajax({
-        type: "GET",
-        url: `/scrap?module=contacts`,
-        beforeSend: function () {
-          _self.text('Scrapping progress...');
-          _self.attr('aria-disabled', true);
-          _self.addClass('disabled');
-          dtHandler.processing(true);
-          dtHandler.clear().draw();
-        },
-        success: function () {
-          _self.text('Done scrapping.');
-          _self.attr('aria-disabled', false);
-          _self.removeClass('disabled');
-          dtHandler.processing(false);
-          dtHandler.columns.adjust().draw();
-        },
-      });
+      var module = prompt("Please provide an module");
+      if (module) {
+
+        var _self = $(this);
+
+        $.ajax({
+          type: "GET",
+          url: `/scrap?module=${module}`,
+          beforeSend: function () {
+            _self.text('Scrapping progress...');
+            _self.attr('aria-disabled', true);
+            _self.addClass('disabled');
+            dtHandler.processing(true);
+            dtHandler.clear().draw();
+          },
+          success: function (response) {
+            console.log(response)
+            _self.text('Done scrapping.');
+            _self.attr('aria-disabled', false);
+            _self.removeClass('disabled');
+            dtHandler.processing(false);
+            dtHandler.columns.adjust().draw();
+          },
+        });
+      }
     });
 
     myFeature.config.table.on("click", "tbody tr td.preview", function () {
