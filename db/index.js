@@ -28,15 +28,15 @@ const rhiDb = {
   connectTimeout: 60000,
 }
 
-var connection = mysql.createConnection(store('database') == 1 ? rhiDb : soulbeatDb);
+var connection = mysql.createConnection(rhiDb);
 // scrapper
 connection.connect(function (err) {
   if (err) {
-    console.error(`${dbMap[store('database')]} database connection failed: ${err.stack}`);
+    console.error(`rhi database connection failed: ${err.stack}`);
     return;
   }
 
-  console.log(`Connected to ${dbMap[store('database')]} databases.`);
+  console.log(`Connected to rhi databases.`);
 });
 module.exports = connection;
 

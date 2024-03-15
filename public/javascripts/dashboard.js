@@ -226,12 +226,16 @@ var myFeature = {
             dtHandler.clear().draw();
           },
           success: function (response) {
-            console.log(response)
-            _self.text('Done scrapping.');
-            _self.attr('aria-disabled', false);
-            _self.removeClass('disabled');
-            dtHandler.processing(false);
-            dtHandler.columns.adjust().draw();
+            if (response.done) { 
+              _self.text('Done scrapping.');
+              _self.attr('aria-disabled', false);
+              _self.removeClass('disabled');
+              dtHandler.processing(false);
+              dtHandler.columns.adjust().draw();
+              setTimeout(() => {
+                _self.text('Start Scrapping');
+              }, 5000);
+            }
           },
         });
       }

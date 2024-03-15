@@ -18,8 +18,6 @@ exports.index = async (req, res, next) => {
   // check of there is a code query
   if (code) {
     res.redirect(`auth/requestAccessToken/${code}`);
-  } else if (!store('appId')) {
-    res.redirect("/setup");
   } else if (req.session.accessToken) {
     res.redirect("/dashboard");
   } else {
