@@ -21,14 +21,18 @@ exports.index = async (req, res, next) => {
             error: `${infusionScrapper.module} not supported!`,
         });
     } else {
-
-        /**
-         * call initialize method
-         */
-        infusionScrapper.init((output) => {
-            if (output.done) {
-                res.json(output);
-            }
-        });
+        try {
+            
+            /**
+             * call initialize method
+             */
+            infusionScrapper.init((output) => {
+                if (output.done) {
+                    res.json(output);
+                }
+            });
+        } catch (error) {
+            res.status(400).json(error);
+        }
     }
 };
