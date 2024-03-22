@@ -6,7 +6,6 @@
 const connection = require("./../db/index");
 
 exports.index = async (req, res, next) => {
-  // call stats
   let stats = await getStats();
 
   if (!stats) {

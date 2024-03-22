@@ -5,11 +5,13 @@
  */
 const InfusionScrapper = require('./../lib/InfusionScrapper');
 
+const limit = 1000;
+
 exports.index = async (req, res, next) => {
 
     const { module } = req.query;
 
-    const infusionScrapper = new InfusionScrapper(req.session.accessToken, module, 1000);
+    const infusionScrapper = new InfusionScrapper(req.session.accessToken, module, limit);
 
     if (!infusionScrapper.module) {
         res.status(400).json({
@@ -22,7 +24,7 @@ exports.index = async (req, res, next) => {
         });
     } else {
         try {
-            
+
             /**
              * call initialize method
              */
