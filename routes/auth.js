@@ -3,9 +3,14 @@ var router = express.Router();
 
 const controller = require("../controllers/auth");
 
-/* GET home page. */
-router.get("/refreshAccessToken", controller.refreshAccessToken);
+/**
+ * loads middlewares
+ */
+const infusionsoft = require("../middlewares/sessionStorage");
 
-router.get("/requestAccessToken/:code", controller.requestAccessToken);
+/* GET home page. */
+router.get("/refreshAccessToken", infusionsoft, controller.refreshAccessToken);
+
+router.get("/requestAccessToken/:code", infusionsoft, controller.requestAccessToken);
 
 module.exports = router;

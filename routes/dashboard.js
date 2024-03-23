@@ -6,10 +6,10 @@ const controller = require("../controllers/dashboard");
 /**
  * loads middlewares
  */
-const database = require("../middlewares/database");
+const infusionsoft = require("../middlewares/sessionStorage");
 const guard = require("../middlewares/routeGuard");
 
 /* GET home page. */
-router.get("/", database, guard, controller.index);
+router.get("/", guard, infusionsoft, controller.index);
 
 module.exports = router;

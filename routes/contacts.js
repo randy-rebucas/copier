@@ -6,14 +6,14 @@ const controller = require('../controllers/contacts');
 /**
  * loads middlewares
  */
-const database = require("../middlewares/database");
+const infusionsoft = require("../middlewares/sessionStorage");
+
 const guard = require("../middlewares/routeGuard");
-
 /* GET home page. */
-router.get('/', database, guard, controller.index);
+router.get('/', guard, infusionsoft, controller.index);
 
-router.get('/all', database, guard, controller.getAll);
+router.get('/all', guard, infusionsoft, controller.getAll);
 
-router.get('/:id', database, guard, controller.getOne);
+router.get('/:id', guard, controller.getOne);
 
 module.exports = router;

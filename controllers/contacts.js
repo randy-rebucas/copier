@@ -5,6 +5,7 @@
  */
 const request = require("request-promise");
 var querystring = require("querystring");
+const connection = require("./../db/index");
 
 exports.index = async (req, res, next) => {
   try {
@@ -20,8 +21,8 @@ exports.index = async (req, res, next) => {
     //   orderDirection === "asc" ? "DESCENDING" : "ASCENDING"
     // );
 
-    let contactResponse = await getContacts(req.connection, limit, offset, search, orderColumn, orderDirection);
-    let countResponse = await getContactsCount(req.connection);
+    let contactResponse = await getContacts(limit, offset, search, orderColumn, orderDirection);
+    let countResponse = await getContactsCount();
 
     const object = {
       draw: req.query.draw,
@@ -35,7 +36,7 @@ exports.index = async (req, res, next) => {
   }
 };
 
-const getContacts = (connection, limit, offset, search, column, direction) => {
+const getContacts = (limit, offset, search, column, direction) => {
 
   return new Promise((resolve, reject) => {
     let query = `SELECT 
@@ -72,7 +73,7 @@ const getContacts = (connection, limit, offset, search, column, direction) => {
   })
 }
 
-const getContactsCount = (connection) => {
+const getContactsCount = () => {
   return new Promise((resolve, reject) => {
     let query = `SELECT (SELECT FORMAT(COUNT(DISTINCT contact_id), 2) FROM contacts) as count`;
     return connection.query(query, (error, results) => {
