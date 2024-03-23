@@ -3,15 +3,17 @@
  * @version 0.0.9
  * ...
  */
-const dbMap = {
-  0: 'Empty',
-  1: 'RHI',
-  2: 'Soulbeat'
-}
+
 exports.index = async (req, res, next) => {
   const { code } = req.query;
 
-  if (code) {
+  const subdomains = ['rhi', 'soulbeat'];
+  const subdomain = req.hostname.split('.').shift();
+
+  if (!subdomains.includes(subdomain)) {
+    let port = req.app.get('env') === 'development' ? `:${req.app.settings.port}` : '';
+    res.redirect(`${req.protocol}://rhi.${req.hostname}${port}`);
+  } else if (code) {
     res.redirect(`auth/requestAccessToken/${code}`);
   } else if (req.session.accessToken) {
     res.redirect("/dashboard");
@@ -25,8 +27,9 @@ exports.index = async (req, res, next) => {
     console.log(stats);
 
     res.render("index", {
-      title: "Infusionsoft Exporter",
+      title: "Infusionsoft Scrapper",
       authorizationUrl: req.getAuthorizationUrl,
+      subdomain: req.hostname.split('.').shift(),
       isAuthorized: req.session.accessToken ? true : false
     });
   }
