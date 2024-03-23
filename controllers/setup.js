@@ -3,49 +3,73 @@
  * @version 0.0.1
  * ...
  */
+const store = require("store2");
+
 exports.index = async (req, res, next) => {
+  res.render("setup/index", {
+    title: "infusionsoft setup",
+    subTitle: "Please enter infusionsoft developer account.",
+    infusionsoft: req.infusionsoft,
+    soulbeatAppId: process.env.INFUSIONSOFT_SOULBEAT_APP_ID,
+    rhiAppId: process.env.INFUSIONSOFT_APP_ID
+  });
+};
+
+exports.set = async (req, res, next) => {
+  const { appId, database } = req.body;
+
+  store({appId: appId, database: database});
+  
+  // req.session.appId = appId;
+  // req.session.database = database;
+  // req.session.save();
+
+  res.redirect("/");
+};
+
+exports.install = async (req, res, next) => {
   // create log table
-  let logTbl = await createLogTable(req.connection);
+  let logTbl = await createLogTable();
   if (!logTbl) {
     res.status(500).send('Something error upon creating log table!')
   }
 
-  let contactTbl = await createContactTable(req.connection);
+  let contactTbl = await createContactTable();
   if (!contactTbl) {
     res.status(500).send('Something error upon creating contact table!')
   }
 
-  let orderTbl = await createOrderTable(req.connection);
+  let orderTbl = await createOrderTable();
   if (!orderTbl) {
     res.status(500).send('Something error upon creating order table!')
   }
 
-  let productTbl = await createProductTable(req.connection);
+  let productTbl = await createProductTable();
   if (!productTbl) {
     res.status(500).send('Something error upon creating product table!')
   }
 
-  let transactionTbl = await createTransactionTable(req.connection);
+  let transactionTbl = await createTransactionTable();
   if (!transactionTbl) {
     res.status(500).send('Something error upon creating transaction table!')
   }
 
-  let tagTbl = await createTagTable(req.connection);
+  let tagTbl = await createTagTable();
   if (!tagTbl) {
     res.status(500).send('Something error upon creating tag table!')
   }
 
-  let scriptionTbl = await createSubscriptionTable(req.connection);
+  let scriptionTbl = await createSubscriptionTable();
   if (!scriptionTbl) {
     res.status(500).send('Something error upon creating subscription table!')
   }
 
-  let campaignTbl = await createCampaignTable(req.connection);
+  let campaignTbl = await createCampaignTable();
   if (!campaignTbl) {
     res.status(500).send('Something error upon creating campaign table!')
   }
 
-  let opportunityTbl = await createOpportunityTable(req.connection);
+  let opportunityTbl = await createOpportunityTable();
   if (!opportunityTbl) {
     res.status(500).send('Something error upon creating opportunity table!')
   }
@@ -55,7 +79,7 @@ exports.index = async (req, res, next) => {
   })
 };
 
-const createLogTable = async (connection) => {
+const createLogTable = async () => {
   return new Promise((resolve, reject) => {
     let query = "CREATE TABLE IF NOT EXISTS `logs` ( `id` int(11) NOT NULL auto_increment,`offset` int(11) NOT NULL,`last_id` int(11) NOT NULL,`type`  VARCHAR(100) NOT NULL default '',`created_at` TIMESTAMP NULL default CURRENT_TIMESTAMP, PRIMARY KEY (`id`))";
     return connection.query(query, (error, results) => {
@@ -67,7 +91,7 @@ const createLogTable = async (connection) => {
   });
 }
 
-const createContactTable = (connection) => {
+const createContactTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS contacts(
       id int(11) NOT NULL auto_increment,
@@ -96,7 +120,7 @@ const createContactTable = (connection) => {
   })
 }
 
-const createOrderTable = (connection) => {
+const createOrderTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS orders(
       id int(11) NOT NULL auto_increment,
@@ -133,7 +157,7 @@ const createOrderTable = (connection) => {
   })
 }
 
-const createProductTable = (connection) => {
+const createProductTable = () => {
   let query = `CREATE TABLE IF NOT EXISTS products(
       id int(11) NOT NULL auto_increment,
       product_id int(11),
@@ -159,7 +183,7 @@ const createProductTable = (connection) => {
   });
 }
 
-const createTransactionTable = (connection) => {
+const createTransactionTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS transactions(
       id int(11) NOT NULL auto_increment,
@@ -189,7 +213,7 @@ const createTransactionTable = (connection) => {
   });
 }
 
-const createTagTable = (connection) => {
+const createTagTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS tags(
       id int(11) NOT NULL auto_increment,
@@ -208,7 +232,7 @@ const createTagTable = (connection) => {
   });
 }
 
-const createSubscriptionTable = (connection) => {
+const createSubscriptionTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS subscriptions(
       id int(11) NOT NULL auto_increment,
@@ -241,7 +265,7 @@ const createSubscriptionTable = (connection) => {
   });
 }
 
-const createCampaignTable = (connection) => {
+const createCampaignTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS campaigns(
       id int(11) NOT NULL auto_increment,
@@ -268,7 +292,7 @@ const createCampaignTable = (connection) => {
   });
 }
 
-const createOpportunityTable = (connection) => {
+const createOpportunityTable = () => {
   return new Promise((resolve, reject) => {
     let query = `CREATE TABLE IF NOT EXISTS opportunities(
       id int(11) NOT NULL auto_increment,

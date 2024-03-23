@@ -1,4 +1,5 @@
 require("dotenv").config();
+const store = require("store2");
 var mysql = require("mysql");
 
 let dbMap = {
