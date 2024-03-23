@@ -16,7 +16,6 @@ exports.index = async (req, res, next) => {
   res.render("dashboard", {
     title: "Scrapped Data.",
     subTitle: "Manage exported data.",
-    infusionsoft: req.infusionsoft,
     total: Object.assign({}, stats.shift()),
   });
 };

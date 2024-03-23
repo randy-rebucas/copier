@@ -7,12 +7,14 @@ const request = require("request-promise");
 
 exports.requestAccessToken = async (req, res, next) => {
   try {
+    let port = req.app.get('env') === 'development' ? `:${req.app.settings.port}` : '';
+    
     const requestBody = {
       grant_type: "authorization_code",
       code: req.params.code,
       client_id: process.env.INFUSIONSOFT_CLIENT_ID,
       client_secret: process.env.INFUSIONSOFT_CLIENT_SECRET,
-      redirect_uri: process.env.INFUSIONSOFT_REDIRECT_URL,
+      redirect_uri: `${req.protocol}://${req.hostname}${port}`,
     };
 
     const options = {
@@ -37,7 +39,7 @@ exports.requestAccessToken = async (req, res, next) => {
 exports.refreshAccessToken = async (req, res, next) => {
   try {
     const buf = Buffer.from(
-      req.infusionsoft.client_id + ":" + req.infusionsoft.client_secret
+      process.env.INFUSIONSOFT_CLIENT_ID + ":" + process.env.INFUSIONSOFT_CLIENT_SECRET
     );
     const encodedData = buf.toString("base64");
 

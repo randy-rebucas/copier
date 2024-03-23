@@ -21,8 +21,7 @@
     "path": "^0.12.7",
     "pug": "2.0.0-beta11",
     "querystring": "^0.2.1",
-    "request-promise": "^4.2.6",
-    "store2": "^2.14.3"
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

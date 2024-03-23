@@ -4,15 +4,11 @@ var router = express.Router();
 /**
  * loads middlewares
  */
-const infusionsoft = require("../middlewares/sessionStorage");
+const database = require("../middlewares/database");
 
 const controller = require('../controllers/setup');
 
 /* GET home page. */
-router.get('/', infusionsoft, controller.index);
-
-router.post('/', controller.set);
-
-router.get('/install', infusionsoft, controller.install);
+router.get('/', database, controller.index);
 
 module.exports = router;

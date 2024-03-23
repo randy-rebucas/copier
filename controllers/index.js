@@ -16,12 +16,31 @@ exports.index = async (req, res, next) => {
   } else if (req.session.accessToken) {
     res.redirect("/dashboard");
   } else {
+    let stats = await getStats(req.connection);
+
+    if (!stats) {
+      res.status(error.status || 500);
+      res.render("error");
+    }
+    console.log(stats);
+
     res.render("index", {
       title: "Infusionsoft Exporter",
-      infusionsoft: req.infusionsoft,
       authorizationUrl: req.getAuthorizationUrl,
-      isAuthorized: req.session.accessToken ? true : false,
-      database: dbMap[req.infusionsoft.database]
+      isAuthorized: req.session.accessToken ? true : false
     });
   }
 };
+
+const getStats = (connection) => {
+  return new Promise((resolve, reject) => {
+    let query = `SELECT (SELECT FORMAT(COUNT(DISTINCT contact_id), 2) FROM contacts) as TotalContacts`;
+
+    return connection.query(query, (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results)
+    });
+  })
+}
