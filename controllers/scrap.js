@@ -11,7 +11,7 @@ exports.index = async (req, res, next) => {
 
     const { module } = req.query;
 
-    const infusionScrapper = new InfusionScrapper(req.session.accessToken, module, limit);
+    const infusionScrapper = new InfusionScrapper(req.connection, req.session.accessToken, module, limit);
 
     if (!infusionScrapper.module) {
         res.status(400).json({

@@ -3,12 +3,10 @@ extends layout/guest
 block content
   div.w-100.m-auto.p-5(style="max-width: 400px")
     div.card
-      div.card-body
-        h5.card-title Infusionsoft Credentials
-        h6.card-subtitle.mb-2.text-body-secondary App Id: #{infusionsoft.app_id}
-        h2.h2 Database: #{database}
-
-    div.d-flex.flex-xl-column.gap-3.mt-3
-      //- a(class='btn btn-secondary' href='/setup') Change Creds
-      if !isAuthorized
-        a(class='btn btn-primary' href= authorizationUrl) Authorize
+      img(src="/images/logo.png" class="card-img-top" alt="...")
+      div.card-body.d-flex.flex-column.text-center
+        h5.card-title= title
+        h6.card-subtitle.mb-2.text-body-secondary Connected to: #{subdomain}
+        p.card-text All instances are connected to #{subdomain} including the scrapper library.
+        if !isAuthorized
+          a(class='btn btn-primary' href= authorizationUrl) Authorize
